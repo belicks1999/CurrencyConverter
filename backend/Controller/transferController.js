@@ -3,7 +3,8 @@ import Transfer from '../Model/transferModel.js';
 
 
 const getConversionRate = async (from, to) => {
-  const response = await axios.get(`https://v6.exchangerate-api.com/v6/443830cd35c1099b0e693b5f/latest/${from}`);
+    const apiKey = process.env.API_KEY;
+  const response = await axios.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${from}`);
   return response.data.conversion_rates[to];
 };
 

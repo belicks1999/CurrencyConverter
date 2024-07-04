@@ -97,9 +97,10 @@ function ConverterForm() {
             <label className="block mb-2 font-bold" htmlFor="amount">Amount</label>
             <input
               onChange={(e) => setTransferAmount(e.target.value)}
-              type="text"
+              type="number"
               className="w-full p-3 mb-3 rounded border"
               id="amount"
+              min="1"
             />
           </div>
 
