@@ -1,0 +1,99 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function ConverterForm() {
+  const [fromCountry, setFromCountry] = useState('');
+  const [toCountry, setToCountry] = useState('');
+  const [transferAmount, setTransferAmount] = useState('');
+  const [convertedAmount, setConvertedAmount] = useState('');
+
+  useEffect(async() => {
+    if (fromCountry && toCountry && transferAmount) {
+        try {
+            const response = await axios.post('http://localhost:5000/api/convert', {
+              fromCountry,
+              toCountry,
+              transferAmount,
+            });
+            setConvertedAmount(response.data.convertedAmount);
+          } catch (error) {
+            console.error('There was an error making the transfer!', error);
+          }
+    }
+  }, [fromCountry, toCountry, transferAmount]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert('saved');
+  }
+
+  return (
+    <div className="bg-gray-600 h-screen flex justify-center items-center">
+      <div className="bg-white p-10 rounded-lg shadow-md w-full max-w-xl">
+        <h1 className="text-center font-bold text-2xl mb-6">Currency Converter</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block mb-2 font-bold" htmlFor="from">From</label>
+            <select
+              onChange={(e) => setFromCountry(e.target.value)}
+              className="w-full p-3 mb-3 rounded border"
+              name="from"
+              id="from"
+            >
+              <option value="">Select a country</option>
+              <option value="USD">USD - US Dollars</option>
+              <option value="AUD">AUD - Australian Dollars</option>
+              <option value="LKR">LKR - Sri Lankan Rupee</option>
+              <option value="INR">INR - Indian Rupee</option>
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2 font-bold" htmlFor="to">To</label>
+            <select
+              onChange={(e) => setToCountry(e.target.value)}
+              className="w-full p-3 mb-3 rounded border"
+              name="to"
+              id="to"
+            >
+              <option value="">Select a country</option>
+              <option value="USD">USD - US Dollars</option>
+              <option value="AUD">AUD - Australian Dollars</option>
+              <option value="LKR">LKR - Sri Lankan Rupee</option>
+              <option value="INR">INR - Indian Rupee</option>
+            </select>
+          </div>
+
+          <div className="mb-6">
+            <label className="block mb-2 font-bold" htmlFor="amount">Amount</label>
+            <input
+              onChange={(e) => setTransferAmount(e.target.value)}
+              type="text"
+              className="w-full p-3 mb-3 rounded border"
+              id="amount"
+            />
+          </div>
+
+          {convertedAmount && (
+            <div className="mb-6">
+              <label className="block mb-2 font-bold" htmlFor="convertedAmount">Converted Amount</label>
+              <input
+                type="text"
+                className="w-full p-3 mb-3 rounded border"
+                value={convertedAmount}
+                id="convertedAmount"
+                disabled
+              />
+            </div>
+          )}
+
+          <button className="w-full bg-blue-500 text-white p-3 rounded font-bold hover:bg-blue-700">
+            Transfer
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default ConverterForm;
