@@ -7,19 +7,23 @@ function ConverterForm() {
   const [transferAmount, setTransferAmount] = useState('');
   const [convertedAmount, setConvertedAmount] = useState('');
 
-  useEffect(async() => {
-    if (fromCountry && toCountry && transferAmount) {
+  useEffect(() => {
+    const fetchConvertedAmount = async () => {
+      if (fromCountry && toCountry && transferAmount) {
         try {
-            const response = await axios.post('http://localhost:5000/api/convert', {
-              fromCountry,
-              toCountry,
-              transferAmount,
-            });
-            setConvertedAmount(response.data.convertedAmount);
-          } catch (error) {
-            console.error('There was an error making the transfer!', error);
-          }
-    }
+          const response = await axios.post('http://localhost:3001/api/transfers/get', {
+            fromCountry,
+            toCountry,
+            transferAmount,
+          });
+          setConvertedAmount(response.data.convertedAmount);
+        } catch (error) {
+          console.error('There was an error making the transfer!', error);
+        }
+      }
+    };
+
+    fetchConvertedAmount();
   }, [fromCountry, toCountry, transferAmount]);
 
   function handleSubmit(e) {
@@ -29,7 +33,7 @@ function ConverterForm() {
 
   return (
     <div className="bg-gray-600 h-screen flex justify-center items-center">
-      <div className="bg-white p-10 rounded-lg shadow-md w-full max-w-xl">
+      <div className="bg-white p-10 rounded-lg shadow-md w-full max-w-2xl">
         <h1 className="text-center font-bold text-2xl mb-6">Currency Converter</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -74,7 +78,9 @@ function ConverterForm() {
             />
           </div>
 
-          {convertedAmount && (
+          
+
+          {transferAmount && convertedAmount && (
             <div className="mb-6">
               <label className="block mb-2 font-bold" htmlFor="convertedAmount">Converted Amount</label>
               <input
@@ -88,7 +94,7 @@ function ConverterForm() {
           )}
 
           <button className="w-full bg-blue-500 text-white p-3 rounded font-bold hover:bg-blue-700">
-            Transfer
+            Convert
           </button>
         </form>
       </div>

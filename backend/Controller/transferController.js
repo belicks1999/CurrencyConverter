@@ -1,26 +1,17 @@
 import axios from 'axios';
 
-const getConversionRate=async(from,to)=>{
+const getConversionRate = async (from, to) => {
+  const response = await axios.get(`https://v6.exchangerate-api.com/v6/443830cd35c1099b0e693b5f/latest/${from}`);
+  return response.data.conversion_rates[to];
+};
 
-
-    const response = await axios.get();
-    return response.data.conversion_rates[to];
-
-}
-
-const getConvertedAmount=async(req,res)=>{
-    const { fromCountry, toCountry, transferAmount } = req.body;
-    try {
-
-        const conversionRate = await getConversionRate(fromCountry, toCountry);
-        const convertedAmount = transferAmount * conversionRate;
-        res.status(201).json(convertedAmount);
-        
-    } catch (error) {
-        
-    }
-
-
-
-
-}
+export const getConvertedAmount = async (req, res) => {
+  const { fromCountry, toCountry, transferAmount } = req.body;
+  try {
+    const conversionRate = await getConversionRate(fromCountry, toCountry);
+    const convertedAmount = Math.round((transferAmount * conversionRate) * 100) / 100;
+    res.status(201).json({ convertedAmount });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
