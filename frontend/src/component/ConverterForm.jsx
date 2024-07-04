@@ -26,9 +26,26 @@ function ConverterForm() {
     fetchConvertedAmount();
   }, [fromCountry, toCountry, transferAmount]);
 
-  function handleSubmit(e) {
+ async function handleSubmit(e) {
     e.preventDefault();
-    alert('saved');
+    
+    try {
+        const response = await axios.post('http://localhost:3001/api/transfers/save', {
+            fromCountry,
+            toCountry,
+            transferAmount,
+            convertedAmount
+          });
+
+          console.log(response.data);
+
+        
+        
+    } catch (error) {
+
+        console.log('There was an error making the transfer!', error);
+        
+    }
   }
 
   return (
@@ -94,7 +111,7 @@ function ConverterForm() {
           )}
 
           <button className="w-full bg-blue-500 text-white p-3 rounded font-bold hover:bg-blue-700">
-            Convert
+            Transfer Amount
           </button>
         </form>
       </div>
