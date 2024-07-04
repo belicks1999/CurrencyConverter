@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Alert from '@mui/material/Alert';
+
+
 
 function ConverterForm() {
   const [fromCountry, setFromCountry] = useState('');
   const [toCountry, setToCountry] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
   const [convertedAmount, setConvertedAmount] = useState('');
+
+  
 
   useEffect(() => {
     const fetchConvertedAmount = async () => {
@@ -37,7 +42,10 @@ function ConverterForm() {
             convertedAmount
           });
 
-          console.log(response.data);
+          alert("Succwsfull")
+
+        
+          
 
         
         
@@ -49,9 +57,9 @@ function ConverterForm() {
   }
 
   return (
-    <div className="bg-gray-600 h-screen flex justify-center items-center">
-      <div className="bg-white p-10 rounded-lg shadow-md w-full max-w-2xl">
-        <h1 className="text-center font-bold text-2xl mb-6">Currency Converter</h1>
+    <div className="flex justify-center items-center">
+      <div className="bg-white p-4 rounded-lg w-full max-w-2xl">
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2 font-bold" htmlFor="from">From</label>
@@ -111,7 +119,7 @@ function ConverterForm() {
           )}
 
           <button className="w-full bg-blue-500 text-white p-3 rounded font-bold hover:bg-blue-700">
-            Transfer Amount
+            Transfer
           </button>
         </form>
       </div>
