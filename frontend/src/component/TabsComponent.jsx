@@ -7,19 +7,22 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 
 const TabsComponent = () => {
-    const [selectedTab, setSelectedTab] = useState(0);
+    const [selectedTab, setSelectedTab] = useState(0); // State to manage the selected tab index
 
     const handleTabChange = (event, newValue) => {
         setSelectedTab(newValue);
     };
 
+     // Function to handle tab change
     return (
         <Box 
             display="flex" 
             alignItems="center" 
             justifyContent="center" 
             minHeight="100vh"
-            bgcolor="#f0f0f0"
+            bgcolor="gray"
+            
+            
         >
             <Paper 
                 elevation={3} 
