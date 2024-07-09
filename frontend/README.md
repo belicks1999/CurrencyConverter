@@ -37,7 +37,7 @@ Replace `your_mongodb_atlas_connection_uri` with your actual MongoDB Atlas conne
 1. Ensure both frontend and backend servers are running concurrently.
 2. Open your browser and navigate to `http://localhost:3000` to use the application.
 
-## Live Demo
-- Hosted live demo: [Your Live Demo Link](#)
+## Github Link
+- https://github.com/belicks1999/CurrencyConverter
 
 
